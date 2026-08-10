@@ -73,6 +73,11 @@ class AskRequest(BaseModel):
 # ─────────────────────────────────────────────────────────────
 # Health & readiness
 # ─────────────────────────────────────────────────────────────
+@app.get("/")
+def root():
+    return {"status": "ok", "service": SERVICE_NAME, "version": SERVICE_VERSION}
+
+
 @app.get("/health")
 def health():
     """Liveness probe — process còn sống không?"""
