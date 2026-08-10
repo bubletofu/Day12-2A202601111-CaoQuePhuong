@@ -10,9 +10,9 @@
 
 | Mục | Nội dung |
 |-----|----------|
-| Họ và tên | (điền họ tên) |
-| Mã học viên | (điền mã học viên) |
-| Repo | (điền link repo DAY12-...) |
+| Họ và tên | Cao Que Phuong |
+| Mã học viên | 2A202601111 |
+| Repo | https://github.com/bubletofu/Day12-2A202601111-CaoQuePhuong |
 
 ## Service
 
