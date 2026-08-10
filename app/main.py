@@ -13,11 +13,14 @@ Luồng một request tới /ask:
 
 from __future__ import annotations
 
+import os
 from contextlib import asynccontextmanager
 from functools import lru_cache
 
 from fastapi import Depends, FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from utils.mock_llm import ask_llm
@@ -65,6 +68,26 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="Day 12 Production Agent", version=SERVICE_VERSION, lifespan=lifespan)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.exists(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+
+@app.get("/demo", response_class=HTMLResponse)
+def demo():
+    index_path = os.path.join(static_dir, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return HTMLResponse("<h1>Demo UI static file not found</h1>")
+
 
 class AskRequest(BaseModel):
     question: str = Field(min_length=1, max_length=2000)
@@ -75,6 +98,9 @@ class AskRequest(BaseModel):
 # ─────────────────────────────────────────────────────────────
 @app.get("/")
 def root():
+    index_path = os.path.join(static_dir, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
     return {"status": "ok", "service": SERVICE_NAME, "version": SERVICE_VERSION}
 
 
