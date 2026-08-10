@@ -89,3 +89,22 @@ content-type: application/json
 Đã lưu ảnh chụp màn hình trong thư mục `screenshots/`:
 
 - `screenshots/dashboard.jpg` — trang quản lý service trên Railway
+
+## GitHub Actions CI/CD
+
+The workflow in `.github/workflows/ci.yml` runs tests and builds the Docker
+image for every push and pull request. Only a successful push to `main`
+deploys to Railway and runs a `/health` smoke test.
+
+Configure these values in the repository under **Settings -> Secrets and
+variables -> Actions**:
+
+| Type | Name | Value |
+|------|------|-------|
+| Secret | `RAILWAY_TOKEN` | Railway account token |
+| Variable | `RAILWAY_PROJECT_ID` | Railway project ID |
+| Variable | `RAILWAY_SERVICE` | `day12-agent` |
+| Variable | `PUBLIC_URL` | `https://day12-2a202601111.up.railway.app` |
+
+The token is referenced only as `${{ secrets.RAILWAY_TOKEN }}` and is never
+stored in the repository.
