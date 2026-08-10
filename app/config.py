@@ -1,3 +1,4 @@
+
 """CP1 — Cấu hình theo 12-Factor.
 
 Nguyên tắc: **không có giá trị cấu hình nào nằm trong code**. Tất cả đến từ
@@ -40,9 +41,13 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # TODO (CP1): khai báo 6 trường theo bảng trên, ví dụ:
-    #     port: int = 8000
-    #     agent_api_key: str
+    port: int = 8000
+    agent_api_key: str
+    redis_url: str = "redis://localhost:6379/0"
+    rate_limit_per_minute: int = 10
+    monthly_budget_usd: float = 10.0
+    log_level: str = "INFO"
+
 
 
 @lru_cache(maxsize=1)
