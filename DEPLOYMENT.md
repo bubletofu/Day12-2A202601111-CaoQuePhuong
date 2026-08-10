@@ -101,8 +101,7 @@ variables -> Actions**:
 
 | Type | Name | Value |
 |------|------|-------|
-| Secret | `RAILWAY_TOKEN` | Railway account token |
-| Variable | `RAILWAY_PROJECT_ID` | Railway project ID |
+| Secret | `RAILWAY_TOKEN` | Railway project token |
 | Variable | `RAILWAY_SERVICE` | `day12-agent` |
 | Variable | `PUBLIC_URL` | `https://day12-2a202601111.up.railway.app` |
 

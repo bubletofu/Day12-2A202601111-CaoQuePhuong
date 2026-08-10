@@ -64,9 +64,10 @@ jobs:
       - name: Deploy
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
           RAILWAY_SERVICE: ${{ vars.RAILWAY_SERVICE || 'day12-agent' }}
-        run: railway up --project "$RAILWAY_PROJECT_ID" --service "$RAILWAY_SERVICE" --detach
+        run: |
+          test -n "$RAILWAY_TOKEN" || { echo "RAILWAY_TOKEN secret is not configured"; exit 1; }
+          railway up --service "$RAILWAY_SERVICE" --detach
 
       - name: Smoke test
         env:
